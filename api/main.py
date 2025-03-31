@@ -4,27 +4,13 @@ import pandas as pd
 import zipfile
 import io
 import os
-from http.server import BaseHTTPRequestHandler
-import json
-import uvicorn
+
 # Initialize FastAPI app
 app = FastAPI()
 
-# Set Together AI API Key
-together.api_key = os.getenv("TOGETHER_API_KEY")  # Store in environment variable
-class handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-        data = json.loads(post_data)
+# Set Together AI API Key (Make sure it's set in Vercel Environment Variables)
+together.api_key = os.getenv("TOGETHER_API_KEY")
 
-        question = data.get("question", "No question provided")
-        answer = f"You asked: {question}"
-
-        self.send_response(200)
-        self.send_header("Content-type", "application/json")
-        self.end_headers()
-        self.wfile.write(json.dumps({"answer": answer}).encode())
 @app.post("/api/")
 async def solve_question(question: str = Form(...), file: UploadFile = File(None)):
     """
@@ -72,6 +58,7 @@ async def process_file(file: UploadFile):
                     return df.to_string()
     return None
 
-
+# Run FastAPI with Uvicorn (Only for local testing)
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
