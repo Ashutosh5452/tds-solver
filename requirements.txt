@@ -1,0 +1,4 @@
+fastapi
+together
+pandas
+zipfile36  # (Agar Python 3.6 use kar raha hai)
