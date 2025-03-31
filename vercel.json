@@ -14,14 +14,6 @@
         {
             "src": "/api/(.*)",
             "dest": "api/main.py"
-        },
-        {
-            "src": "/api",
-            "dest": "api/index.js"
-        },
-        {
-            "src": "/api/(.*)",
-            "dest": "api/index.js"
         }
     ]
 }
