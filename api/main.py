@@ -6,6 +6,7 @@ import io
 import os
 from http.server import BaseHTTPRequestHandler
 import json
+import uvicorn
 # Initialize FastAPI app
 app = FastAPI()
 
@@ -70,3 +71,7 @@ async def process_file(file: UploadFile):
                     df = pd.read_csv(csvfile)
                     return df.to_string()
     return None
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
